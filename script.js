@@ -8,6 +8,8 @@ class Tile{
         this.row = row;
         this.col = col;
     }
+    // TODO: add game over after all tiles filled. disable changing tile after initialized?
+    // TODO: game over alert doesn't appear sometimes
     checkGameOver() {
         let isHorizontalSame = false, isVerticalSame = false, isDiagonalSame = false;
         // because value of "this" changes inside functions (that aren't methods)
@@ -40,9 +42,10 @@ const board = new Board();
 
 // TODO: rewrite to attach onclick only to table instead of all tiles?
     // possible due to event delegation
+// NOTE: could use data attribute w/ "dataset" DOM property on event.target
+// for row & col number
 document.querySelectorAll("#board tr").forEach((row, rNum) => {
     row.querySelectorAll("td").forEach((tile, cNum) => {
-        // NOTE: could use data attribute w/ "dataset" DOM property for row & col number as well
         
         tiles[rNum][cNum] = new Tile(rNum, cNum);
         tile.onclick = () => {
