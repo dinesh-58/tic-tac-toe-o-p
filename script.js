@@ -10,7 +10,7 @@ class Tile{
     }
     checkGameOver() {
         let isHorizontalSame = false, isVerticalSame = false, isDiagonalSame = false;
-        // because value of this changes inside functions (that aren't methods)
+        // because value of "this" changes inside functions (that aren't methods)
         const currentTile = this;
         // check horizontal
         isHorizontalSame = tiles[this.row].every(tile => currentTile.symbol == tile.symbol);
@@ -27,25 +27,30 @@ class Tile{
 
 class Board {
     // NOTE: must be inside Board class because after entering X, the turn is for 0
-    // TODO: fix symbol toggle & errors when clicking
+    currentSymbol = "X";
+
     toggleCurrentSymbol() {
-        this.symbol = this.symbol == "X" ? "O" : "X";
+        this.currentSymbol = this.currentSymbol == "X" ? "O" : "X";
         // similar to toggle boolean logic
     }
 }
 
 const tiles = [[], [], []];
+const board = new Board();
+
+// TODO: rewrite to attach onclick only to table instead of all tiles?
+    // possible due to event delegation
 document.querySelectorAll("#board tr").forEach((row, rNum) => {
     row.querySelectorAll("td").forEach((tile, cNum) => {
         // NOTE: could use data attribute w/ "dataset" DOM property for row & col number as well
         
-        tiles[rNum][cNum] = new Tile();
+        tiles[rNum][cNum] = new Tile(rNum, cNum);
         tile.onclick = () => {
-            tiles[rNum][cNum].toggleCurrentSymbol(); 
+            tiles[rNum][cNum].symbol = board.currentSymbol;
             tile.innerText = tiles[rNum][cNum].symbol;
+            board.toggleCurrentSymbol(); 
 
             if(tiles[rNum][cNum].checkGameOver()) alert("Game over");
-            // TODO: check game over condition
         }
     })
 })
