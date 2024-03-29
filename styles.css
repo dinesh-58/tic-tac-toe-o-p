@@ -1,4 +1,7 @@
 
+:root {
+    --symbol-size: 80px;
+}
 body {
     background: gray;
     display: flex;
@@ -6,10 +9,17 @@ body {
     align-items: center;
 }
 
-tr {
-    height: 80px;
+table {
+    text-align: center;
+    font-size: var(--symbol-size);
+    font-family: monospace;
 }
+tr {
+    height: var(--symbol-size);
+}
+
 td {
-    width: 80px;
-    border: 1px solid black;
+    width: var(--symbol-size);
+    box-sizing: border-box;
+    outline: 1px solid black;
 }
